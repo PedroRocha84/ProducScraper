@@ -4,19 +4,51 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <!-- Spring Boot manages the versions of the common dependencies, so we do not pin them one by one -->
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.3.5</version>
+        <relativePath/>
+    </parent>
+
     <groupId>com.productscraper</groupId>
     <artifactId>product-scraper</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>ProductScraper</name>
-    <description>Scrapes products from several supplier websites, stores them in Postgres per tenant and finds equal products across suppliers</description>
+    <description>Scrapes products from several supplier websites, stores them in Postgres per store and finds equal products across stores</description>
 
     <properties>
-        <!-- Java version used to compile the project -->
-        <maven.compiler.release>21</maven.compiler.release>
+        <!-- Java version used to compile the project (the Spring Boot parent maps it to the compiler release) -->
+        <java.version>17</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
-    <!-- Dependencies are added step by step as each feature is built -->
+    <dependencies>
+        <!-- Core Spring Boot: dependency injection, configuration and logging.
+             No web server on purpose: this application is a batch job. -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+
+        <!-- JUnit 5, AssertJ, Mockito and Spring test support -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!-- Allows "mvn spring-boot:run" and packages a runnable jar -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 </project>
