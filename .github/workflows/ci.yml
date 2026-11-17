@@ -1,0 +1,47 @@
+# Continuous Integration: builds the project and runs the tests automatically on GitHub,
+# so every change is checked on a clean machine and not only on your own computer.
+name: CI
+
+# When the workflow runs:
+#  - on every pull request that targets main (checks the change before it is merged)
+#  - on every push to main (checks main after a merge)
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+# Least privilege: the workflow can only read the repository, nothing else
+permissions:
+  contents: read
+
+# If a new commit is pushed to the same branch while a run is still going, cancel the old run
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build and test
+    # GitHub provides a fresh Ubuntu virtual machine for each run
+    runs-on: ubuntu-latest
+    # Safety net: stop a stuck run instead of waiting for the default 6 hours
+    timeout-minutes: 15
+
+    steps:
+      # Download the repository code onto the virtual machine
+      - name: Check out the code
+        uses: actions/checkout@v4
+
+      # Install JDK 17 (same version as the project) and cache the Maven dependencies,
+      # so the next runs do not download them again
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: maven
+
+      # Compile, run the tests and package. -B (batch mode) gives clean logs for CI
+      - name: Build and run the tests
+        run: mvn -B verify
