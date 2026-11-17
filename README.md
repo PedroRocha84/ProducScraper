@@ -5,7 +5,7 @@ across suppliers and produces a single list of unique products.
 
 ## Goal
 
-1. Scrape products from different supplier websites (starting with foxled.pt, polegada.pt, pedralux.pt and lojadoeletrecista.pt).
+1. Scrape products from different supplier websites.
 2. Store everything in Postgres, separated by tenant.
 3. Compare products from all suppliers and find the equal ones.
 4. Produce a unique product list.
