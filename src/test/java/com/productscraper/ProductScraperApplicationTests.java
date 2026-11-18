@@ -6,12 +6,14 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Import;
 
 /**
- * Smoke test: proves that the Spring context starts, which also covers
- * {@link ProductScraperApplication#main(String[])} wiring (component scan and auto-configuration).
+ * Smoke test: proves that the Spring context starts (including the database connection and the Flyway
+ * migrations), which also covers {@link ProductScraperApplication#main(String[])} wiring.
  */
 @SpringBootTest
+@Import(TestcontainersConfiguration.class)
 class ProductScraperApplicationTests {
 
     @Autowired

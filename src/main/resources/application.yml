@@ -1,3 +1,9 @@
 spring:
   application:
     name: product-scraper
+  datasource:
+    # Defaults match compose.yaml (local development). Override with environment variables elsewhere.
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/productscraper}
+    username: ${DB_USER:productscraper}
+    password: ${DB_PASSWORD:productscraper}
+  # Flyway runs the scripts in db/migration automatically when the application starts
