@@ -5,25 +5,27 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Import;
+import org.springframework.core.env.Environment;
 
 /**
- * Smoke test: proves that the Spring context starts, which also covers
- * {@link ProductScraperApplication#main(String[])} wiring (component scan and auto-configuration).
+ * Smoke tests: the whole application context starts against a throw-away PostgreSQL (Testcontainers).
  */
 @SpringBootTest
+@Import(TestcontainersConfiguration.class)
 class ProductScraperApplicationTests {
 
     @Autowired
-    private ApplicationContext context;
+    private Environment environment;
 
+    /** Fails if any bean, Flyway migration or JPA mapping cannot start. */
     @Test
     void contextLoads() {
-        assertThat(context).isNotNull();
     }
 
+    /** The application name comes from application.yml. */
     @Test
     void applicationNameComesFromConfiguration() {
-        assertThat(context.getEnvironment().getProperty("spring.application.name")).isEqualTo("product-scraper");
+        assertThat(environment.getProperty("spring.application.name")).isEqualTo("product-scraper");
     }
 }
