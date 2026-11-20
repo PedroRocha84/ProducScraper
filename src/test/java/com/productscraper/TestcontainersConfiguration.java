@@ -12,7 +12,7 @@ import org.testcontainers.utility.DockerImageName;
  * Docker must be running when the tests execute.
  */
 @TestConfiguration(proxyBeanMethods = false)
-class TestcontainersConfiguration {
+public class TestcontainersConfiguration {
 
     @Bean
     @ServiceConnection

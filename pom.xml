@@ -24,7 +24,7 @@
         <!-- Java version used to compile the project (the Spring Boot parent maps it to the compiler release) -->
         <java.version>17</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-            <!-- Docker Engine 29 needs a newer Testcontainers than the one Spring Boot 3.3 manages -->
+        <!-- Docker Engine 29 needs a newer Testcontainers than the one Spring Boot 3.3 manages -->
         <testcontainers.version>1.21.4</testcontainers.version>
     </properties>
 
@@ -39,7 +39,7 @@
         <!-- Database access: connection pool (HikariCP) and JdbcTemplate -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-jdbc</artifactId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
 
         <!-- Flyway: versioned database migrations (the second artifact adds PostgreSQL support) -->
